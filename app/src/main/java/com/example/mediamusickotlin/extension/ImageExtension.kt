@@ -1,5 +1,6 @@
 package com.example.mediamusickotlin.extension
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -7,7 +8,6 @@ import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
-import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -15,7 +15,6 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.mediamusickotlin.R
-import com.example.mediamusickotlin.adapter.MusicAdapter
 import java.io.File
 
 fun Context.loadThumbnailBitmap(path: String, result: ((Bitmap?) -> Unit)) {
@@ -67,7 +66,13 @@ fun Context.getImageSong(path: String): Bitmap? {
     return art
 }
 
-fun Context.getImgArt(path: String) : ByteArray?{
+@SuppressLint("UseCompatLoadingForDrawables")
+fun showImgSong(context: Context,path : String, view :ImageView){
+    Glide.with(context).load(context.getImageSong(path))
+        .placeholder(context.getDrawable(R.drawable.ic_default_music)).into(view)
+}
+
+fun getImgArt(path: String) : ByteArray?{
     val retriever = MediaMetadataRetriever()
     retriever.setDataSource(path)
     return  retriever.embeddedPicture

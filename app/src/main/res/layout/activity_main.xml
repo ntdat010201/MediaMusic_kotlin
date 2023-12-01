@@ -77,6 +77,7 @@
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
         <androidx.fragment.app.FragmentContainerView
+            android:name="com.example.mediamusickotlin.fragment.NowPlaying"
             android:id="@+id/nowPlaying"
             tools:layout = "@layout/fragment_now_playing"
             app:layout_constraintBottom_toBottomOf="parent"

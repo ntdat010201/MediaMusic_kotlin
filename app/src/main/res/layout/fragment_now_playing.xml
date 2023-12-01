@@ -2,10 +2,54 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/cool_pink"
     tools:context=".fragment.NowPlaying">
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="5dp"
+        app:shapeAppearanceOverlay="@style/curved"
+        android:src="@drawable/ic_default_music"
+        android:id="@+id/songImgNP"
+        android:layout_width="70dp"
+        android:layout_height="50dp"/>
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/nextBtnNP"
+        android:layout_marginEnd="10dp"
+        android:layout_alignParentEnd="true"
+        app:icon="@drawable/ic_skip_next"
+        app:iconTint="@color/white"
+        android:backgroundTint="@color/cool_pink"
+        android:layout_centerVertical="true"
+        app:iconSize="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/playPauseBtnNP"
+        android:layout_toStartOf="@id/nextBtnNP"
+        android:layout_marginHorizontal="5dp"
+        app:icon="@drawable/ic_play"
+        app:iconTint="@color/white"
+        android:backgroundTint="@color/cool_pink"
+        android:layout_centerVertical="true"
+        app:iconSize="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_toEndOf="@id/songImgNP"
+        android:layout_toStartOf="@id/playPauseBtnNP"
+        android:id="@+id/songNameNP"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/song_name"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:gravity="center"/>
 
 </RelativeLayout>

@@ -21,6 +21,7 @@ import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.example.mediamusickotlin.databinding.ActivityPlayerBinding
 import com.example.mediamusickotlin.extension.getImageSong
+import com.example.mediamusickotlin.extension.showImgSong
 import com.example.mediamusickotlin.model.Music
 import com.example.mediamusickotlin.service.MusicService
 import com.example.mediamusickotlin.utils.Const.REQUEST_EQUALIZER
@@ -124,8 +125,9 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setLayout() {
-        Glide.with(this).load(this.getImageSong(musicListPA[songPosition].path))
-            .placeholder(this.getDrawable(R.drawable.ic_default_music)).into(binding.songImgPA)
+        showImgSong(this,musicListPA[songPosition].path, binding.songImgPA)
+//        Glide.with(this).load(this.getImageSong(musicListPA[songPosition].path))
+//            .placeholder(this.getDrawable(R.drawable.ic_default_music)).into(binding.songImgPA)
         binding.songNamePA.text = musicListPA[songPosition].title
         if (repeat) {
             binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
