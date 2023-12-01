@@ -17,13 +17,9 @@ class FavouriteActivity : AppCompatActivity() {
         initListener()
     }
 
-    private fun initData() {
+    private fun initData() {}
 
-    }
-
-    private fun initView() {
-
-    }
+    private fun initView() {}
 
     private fun initListener() {
         clickBack()
