@@ -57,7 +57,6 @@ class MusicAdapter(
                     sendIntent(ref = "NowPlaying", pos = PlayerActivity.songPosition)
                 else -> sendIntent(ref = "MusicAdapter",position)
             }
-
         }
     }
 

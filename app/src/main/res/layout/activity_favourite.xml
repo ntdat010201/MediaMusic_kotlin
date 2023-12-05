@@ -5,51 +5,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FavouriteActivity">
-    
+
     <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:background="@color/cool_pink"
-        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/backBtnFRA"
-            android:padding="5dp"
-            android:contentDescription="@string/back_btn"
-            android:src="@drawable/ic_back"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:backgroundTint="@android:color/transparent"
+            android:contentDescription="@string/back_btn"
+            android:padding="5dp"
+            android:src="@drawable/ic_back"
             app:tint="@color/white" />
 
         <TextView
-            android:textColor="@color/white"
-            android:textSize="25sp"
-            android:gravity="center"
-            android:contentDescription="@string/favourites_btn"
-            android:text="@string/favourites_btn"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:contentDescription="@string/favourites_btn"
+            android:gravity="center"
+            android:text="@string/favourites_btn"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
     </LinearLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:id="@+id/favoriteRV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scrollbars="vertical"
+        android:paddingBottom="40dp"
+        android:scrollbarThumbVertical="@drawable/ic_scroll_bar"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        app:icon="@drawable/ic_shuffle"
+        app:iconSize="35dp"
+        app:iconTint="@color/cool_pink"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.9"
-        android:backgroundTint="@color/white"
-        app:iconTint="@color/cool_pink"
-        app:iconSize="35dp"
-        app:icon="@drawable/ic_shuffle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:strokeWidth="2dp"
-        app:strokeColor="@color/cool_pink"/>
+        app:strokeColor="@color/cool_pink"
+        app:strokeWidth="2dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
