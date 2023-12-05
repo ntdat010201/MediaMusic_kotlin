@@ -7,7 +7,6 @@ import android.os.Build
 import com.example.mediamusickotlin.utils.Const.CHANNEL_ID
 
 class ApplicationClass : Application() {
-
     override fun onCreate() {
         super.onCreate()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){

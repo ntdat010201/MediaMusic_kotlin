@@ -53,6 +53,8 @@ class MusicAdapter(
         holder.itemView.setOnClickListener {
             when {
                 MainActivity.search -> sendIntent(ref = "MusicAdapterSearch",position)
+                musicList[position].id == PlayerActivity.nowPlayingId ->
+                    sendIntent(ref = "NowPlaying", pos = PlayerActivity.songPosition)
                 else -> sendIntent(ref = "MusicAdapter",position)
             }
 

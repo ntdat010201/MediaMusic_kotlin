@@ -1,9 +1,11 @@
 package com.example.mediamusickotlin.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.mediamusickotlin.PlayerActivity
 import com.example.mediamusickotlin.R
@@ -37,6 +39,15 @@ class NowPlaying : Fragment() {
     private fun initListener() {
         clickPlayPauseNP()
         clickNextNP()
+        clickShowPlayerA()
+    }
+    private fun clickShowPlayerA(){
+        binding.root.setOnClickListener {
+            val intent = Intent(requireContext(), PlayerActivity::class.java)
+            intent.putExtra("pos", PlayerActivity.songPosition)
+            intent.putExtra("class", "NowPlaying")
+            ContextCompat.startActivity(requireContext(),intent,null)
+        }
     }
 
     private fun clickPlayPauseNP() {
@@ -68,6 +79,7 @@ class NowPlaying : Fragment() {
         super.onResume()
         if (PlayerActivity.musicService != null) {
             binding.root.visibility = View.VISIBLE
+            binding.songNameNP.isSelected = true
             showImgSong(
                 requireContext(), PlayerActivity.musicListPA[PlayerActivity.songPosition].path,
                 binding.songImgNP

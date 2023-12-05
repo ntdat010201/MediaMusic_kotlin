@@ -49,11 +49,6 @@ class NotificationReceiver : BroadcastReceiver() {
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun prevNextSong(increment : Boolean, context: Context){
         setSongPositionUtil.setSongPosition(increment = increment)
-        /*PlayerActivity.musicService!!.mediaPlayer!!.setDataSource(PlayerActivity.musicListPA[PlayerActivity.songPosition].path)
-        PlayerActivity.musicService!!.mediaPlayer!!.prepare()
-        PlayerActivity.binding.playPauseBtnPA.setIconResource(R.drawable.ic_pause)
-        PlayerActivity.musicService!!.showNotification(R.drawable.ic_pause)*/
-
         PlayerActivity.musicService!!.createMediaPlayer()
         showImgSong(context,PlayerActivity.musicListPA[PlayerActivity.songPosition].path,PlayerActivity.binding.songImgPA)
         showImgSong(context,PlayerActivity.musicListPA[PlayerActivity.songPosition].path,NowPlaying.binding.songImgNP)

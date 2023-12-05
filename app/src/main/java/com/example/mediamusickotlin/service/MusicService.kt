@@ -105,6 +105,8 @@ class MusicService : Service() {
             PlayerActivity.binding.seekBarPA.progress = 0
             PlayerActivity.binding.seekBarPA.max = mediaPlayer!!.duration
 
+            PlayerActivity.nowPlayingId = PlayerActivity.musicListPA[PlayerActivity.songPosition].id
+
         } catch (e: java.lang.Exception) {
             return
         }

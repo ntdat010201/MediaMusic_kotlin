@@ -45,6 +45,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         var min15: Boolean = false
         var min30: Boolean = false
         var min60: Boolean = false
+        var nowPlayingId : String = ""
 
         @SuppressLint("StaticFieldLeak")
         lateinit var binding: ActivityPlayerBinding
@@ -64,7 +65,6 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
     private fun initData() {
         initializeLayout()
         /*createMediaPlayer()*/
-        startService()
     }
 
     private fun initView() {
@@ -86,17 +86,32 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
     private fun initializeLayout() {
         songPosition = intent.getIntExtra("pos", 0)
         when (intent.getStringExtra("class")) {
+            "NowPlaying" -> {
+                setLayout()
+                binding.tvSeekBarStart.text = formatUtil.formatDuration(musicService!!.mediaPlayer!!.currentPosition.toLong())
+                binding.tvSeekbarEnd.text = formatUtil.formatDuration(musicService!!.mediaPlayer!!.duration.toLong())
+                binding.seekBarPA.progress = musicService!!.mediaPlayer!!.currentPosition
+                binding.seekBarPA.max = musicService!!.mediaPlayer!!.duration
+                if (isPlaying){
+                    binding.playPauseBtnPA.setIconResource(R.drawable.ic_pause)
+                } else{
+                    binding.playPauseBtnPA.setIconResource(R.drawable.ic_play)
+                }
+            }
             "MusicAdapterSearch" -> {
+                startService()
                 musicListPA = arrayListOf()
                 musicListPA.addAll(MainActivity.musicListSearch)
                 setLayout()
             }
             "MusicAdapter" -> {
+                startService()
                 musicListPA = arrayListOf()
                 musicListPA.addAll(MainActivity.musicListMA)
                 setLayout()
             }
             "MainActivity" -> {
+                startService()
                 musicListPA = arrayListOf()
                 musicListPA.addAll(MainActivity.musicListMA)
                 musicListPA.shuffle()
@@ -118,6 +133,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             binding.playPauseBtnPA.setIconResource(R.drawable.ic_pause)
             musicService!!.showNotification(R.drawable.ic_pause)
             createSeekBar()
+            nowPlayingId = musicListPA[songPosition].id
         } catch (e: java.lang.Exception) {
             return
         }
@@ -125,9 +141,8 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setLayout() {
-        showImgSong(this,musicListPA[songPosition].path, binding.songImgPA)
-//        Glide.with(this).load(this.getImageSong(musicListPA[songPosition].path))
-//            .placeholder(this.getDrawable(R.drawable.ic_default_music)).into(binding.songImgPA)
+        showImgSong(this, musicListPA[songPosition].path, binding.songImgPA)
+
         binding.songNamePA.text = musicListPA[songPosition].title
         if (repeat) {
             binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
@@ -240,7 +255,12 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                         min15 = false
                         min30 = false
                         min15 = false
-                        binding.timerBtnPA.setColorFilter(ContextCompat.getColor(this, R.color.cool_pink))
+                        binding.timerBtnPA.setColorFilter(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.cool_pink
+                            )
+                        )
                     }.setNegativeButton("không") { dialog, _ ->
                         dialog.dismiss()
                     }
@@ -262,8 +282,8 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             Toast.makeText(this, "nhạc dừng sau 15 phút", Toast.LENGTH_SHORT).show()
             binding.timerBtnPA.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
             min15 = true
-             Thread {
-                Thread.sleep(15*60*1000)
+            Thread {
+                Thread.sleep((15 * 60 * 1000).toLong())
                 if (min15) {
                     exitApplication()
                 }
@@ -276,7 +296,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             binding.timerBtnPA.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
             min30 = true
             Thread {
-                Thread.sleep(30*60*1000)
+                Thread.sleep((30 * 60 * 1000).toLong())
                 if (min30) {
                     exitApplication()
                 }
@@ -288,7 +308,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             binding.timerBtnPA.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
             min60 = true
             Thread {
-                Thread.sleep(60*60*1000)
+                Thread.sleep((60 * 60 * 1000).toLong())
                 if (min60) {
                     exitApplication()
                 }
@@ -298,13 +318,13 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         }
     }
 
-    private fun clickShare(){
+    private fun clickShare() {
         binding.shareBtnPA.setOnClickListener {
             val shareIntent = Intent()
             shareIntent.action = Intent.ACTION_SEND
             shareIntent.type = "audio/*"
             shareIntent.putExtra(Intent.EXTRA_STREAM, musicListPA[songPosition].path.toUri())
-            startActivity(Intent.createChooser(shareIntent,"Sharing Music File!!"))
+            startActivity(Intent.createChooser(shareIntent, "Sharing Music File!!"))
             Toast.makeText(this, "loading...", Toast.LENGTH_SHORT).show()
         }
     }
@@ -312,7 +332,8 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
     private fun createSeekBar() {
         binding.tvSeekBarStart.text =
             formatUtil.formatDuration(musicService!!.mediaPlayer!!.currentPosition.toLong())
-        binding.tvSeekbarEnd.text = formatUtil.formatDuration(musicService!!.mediaPlayer!!.duration.toLong())
+        binding.tvSeekbarEnd.text =
+            formatUtil.formatDuration(musicService!!.mediaPlayer!!.duration.toLong())
         binding.seekBarPA.progress = 0
         binding.seekBarPA.max = musicService!!.mediaPlayer!!.duration
         musicService!!.mediaPlayer!!.setOnCompletionListener(this)
@@ -325,6 +346,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                     musicService!!.mediaPlayer!!.seekTo(progress)
                 }
             }
+
             override fun onStartTrackingTouch(p0: SeekBar?) = Unit
             override fun onStopTrackingTouch(p0: SeekBar?) = Unit
         })
@@ -344,11 +366,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
     private fun startService() {
         val intent = Intent(this, MusicService::class.java)
         bindService(intent, this, BIND_AUTO_CREATE)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent)
-        } else {
-            startService(intent)
-        }
+        startService(intent)
     }
 
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
