@@ -15,6 +15,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.mediamusickotlin.databinding.ActivitySplashBinding
+import com.example.mediamusickotlin.model.Music
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 
 
 class SplashActivity : AppCompatActivity() {
@@ -50,7 +53,9 @@ class SplashActivity : AppCompatActivity() {
         handler!!.postDelayed({
             val intent = Intent(this@SplashActivity, MainActivity::class.java)
             startActivity(intent)
-        }, 1000)
+            getDataFavourite()
+            finish()
+        }, 1300)
     }
 
     private fun userResponses() {
@@ -87,5 +92,16 @@ class SplashActivity : AppCompatActivity() {
             }
         }
         storagePermissionLauncher!!.launch(permission)
+    }
+
+    private fun getDataFavourite() {
+//        truy xuất dữ liệu Favourite sd Persistent
+        val editor = getSharedPreferences("FAVOURITES", MODE_PRIVATE)
+        val jsonString = editor.getString("FavouriteSongs", null)
+        val typeToken = object : TypeToken<ArrayList<Music>>() {}.type
+        if (jsonString != null) {
+            val data: ArrayList<Music> = GsonBuilder().create().fromJson(jsonString, typeToken)
+            FavouriteActivity.favouriteSongs.addAll(data)
+        }
     }
 }

@@ -22,6 +22,7 @@ import com.example.mediamusickotlin.model.Music
 import com.example.mediamusickotlin.utils.Const
 import com.example.mediamusickotlin.utils.ExitApplicationUtil.Companion.exitApplication
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.GsonBuilder
 import java.io.File
 import kotlin.system.exitProcess
 
@@ -109,6 +110,7 @@ class MainActivity : AppCompatActivity() {
         binding.root.addDrawerListener(toggle)
         toggle.syncState()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -183,11 +185,21 @@ class MainActivity : AppCompatActivity() {
         return tempList
     }
 
+    @SuppressLint("CommitPrefEdits")
     override fun onDestroy() {
         super.onDestroy()
         if (!PlayerActivity.isPlaying && PlayerActivity.musicService != null) {
             exitApplication()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // lưu trữ dữ liệu Favourite sd Persistent
+        val editor = getSharedPreferences("FAVOURITES", MODE_PRIVATE).edit()
+        val jsonString = GsonBuilder().create().toJson(FavouriteActivity.favouriteSongs)
+        editor.putString("FavouriteSongs",jsonString)
+        editor.apply()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

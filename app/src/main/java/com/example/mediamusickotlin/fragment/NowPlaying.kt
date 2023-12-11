@@ -79,12 +79,12 @@ class NowPlaying : Fragment() {
         super.onResume()
         if (PlayerActivity.musicService != null) {
             binding.root.visibility = View.VISIBLE
-            binding.songNameNP.isSelected = true
             showImgSong(
                 requireContext(), PlayerActivity.musicListPA[PlayerActivity.songPosition].path,
                 binding.songImgNP
             )
             binding.songNameNP.text = PlayerActivity.musicListPA[PlayerActivity.songPosition].title
+            binding.songNameNP.isSelected = true
             if (PlayerActivity.isPlaying) {
                 binding.playPauseBtnNP.setIconResource(R.drawable.ic_pause)
             } else {

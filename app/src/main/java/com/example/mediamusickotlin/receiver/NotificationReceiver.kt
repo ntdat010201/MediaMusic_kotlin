@@ -11,10 +11,12 @@ import com.example.mediamusickotlin.extension.showImgSong
 import com.example.mediamusickotlin.fragment.NowPlaying
 import com.example.mediamusickotlin.utils.Const
 import com.example.mediamusickotlin.utils.ExitApplicationUtil.Companion.exitApplication
+import com.example.mediamusickotlin.utils.FavouriteCheckerUtil
 import com.example.mediamusickotlin.utils.SetSongPositionUtil
 
 class NotificationReceiver : BroadcastReceiver() {
     private val setSongPositionUtil by lazy { SetSongPositionUtil() }
+    private val favouriteCheckerUtil by lazy { FavouriteCheckerUtil() }
     override fun onReceive(context: Context?, intent: Intent?) {
         when (intent?.action) {
             Const.PREVIOUS -> prevNextSong(increment = false,context = context!!)
@@ -51,9 +53,18 @@ class NotificationReceiver : BroadcastReceiver() {
         setSongPositionUtil.setSongPosition(increment = increment)
         PlayerActivity.musicService!!.createMediaPlayer()
         showImgSong(context,PlayerActivity.musicListPA[PlayerActivity.songPosition].path,PlayerActivity.binding.songImgPA)
-        showImgSong(context,PlayerActivity.musicListPA[PlayerActivity.songPosition].path,NowPlaying.binding.songImgNP)
         PlayerActivity.binding.songNamePA.text = PlayerActivity.musicListPA[PlayerActivity.songPosition].title
+        showImgSong(context,PlayerActivity.musicListPA[PlayerActivity.songPosition].path,NowPlaying.binding.songImgNP)
+        NowPlaying.binding.songNameNP.text = PlayerActivity.musicListPA[PlayerActivity.songPosition] .title
         playMusic()
+        PlayerActivity.fIndex = favouriteCheckerUtil.favouriteChecker(PlayerActivity.musicListPA[PlayerActivity.songPosition].id)
+        if (PlayerActivity.isFavourite){
+            PlayerActivity.binding.favouriteBtnPA.setImageResource(R.drawable.ic_favorite)
+        } else{
+            PlayerActivity.binding.favouriteBtnPA.setImageResource(R.drawable.ic_favorite_empty)
+
+        }
+
     }
 
 }

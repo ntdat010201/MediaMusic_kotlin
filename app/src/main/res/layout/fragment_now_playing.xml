@@ -41,6 +41,10 @@
         android:layout_height="wrap_content"/>
 
     <TextView
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+
         android:layout_toEndOf="@id/songImgNP"
         android:layout_toStartOf="@id/playPauseBtnNP"
         android:id="@+id/songNameNP"

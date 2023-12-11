@@ -26,6 +26,7 @@ import com.example.mediamusickotlin.model.Music
 import com.example.mediamusickotlin.service.MusicService
 import com.example.mediamusickotlin.utils.Const.REQUEST_EQUALIZER
 import com.example.mediamusickotlin.utils.ExitApplicationUtil.Companion.exitApplication
+import com.example.mediamusickotlin.utils.FavouriteCheckerUtil
 import com.example.mediamusickotlin.utils.FormatUtil
 import com.example.mediamusickotlin.utils.SetSongPositionUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -35,6 +36,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
 
     private val setSongPositionUtil by lazy { SetSongPositionUtil() }
     private val formatUtil by lazy { FormatUtil() }
+    private val favouriteCheckerUtil by lazy { FavouriteCheckerUtil() }
 
     companion object {
         lateinit var musicListPA: ArrayList<Music>
@@ -46,6 +48,8 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         var min30: Boolean = false
         var min60: Boolean = false
         var nowPlayingId : String = ""
+        var isFavourite : Boolean = false
+        var fIndex : Int = -1
 
         @SuppressLint("StaticFieldLeak")
         lateinit var binding: ActivityPlayerBinding
@@ -64,11 +68,9 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
 
     private fun initData() {
         initializeLayout()
-        /*createMediaPlayer()*/
     }
 
     private fun initView() {
-        /*setLayout()*/
     }
 
     private fun initListener() {
@@ -81,11 +83,18 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         clickEqualizer()
         clickTimer()
         clickShare()
+        clickFavourite()
     }
 
     private fun initializeLayout() {
         songPosition = intent.getIntExtra("pos", 0)
         when (intent.getStringExtra("class")) {
+            "FavouriteAdapter" -> {
+                startService()
+                musicListPA = arrayListOf()
+                musicListPA.addAll(FavouriteActivity.favouriteSongs)
+                setLayout()
+            }
             "NowPlaying" -> {
                 setLayout()
                 binding.tvSeekBarStart.text = formatUtil.formatDuration(musicService!!.mediaPlayer!!.currentPosition.toLong())
@@ -117,6 +126,26 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                 musicListPA.shuffle()
                 setLayout()
             }
+            "FavouriteShuffle" -> {
+                startService()
+                musicListPA = arrayListOf()
+                musicListPA.addAll(FavouriteActivity.favouriteSongs)
+                musicListPA.shuffle()
+                setLayout()
+            }
+            "PlaylistDetailsAdapter" ->{
+                startService()
+                musicListPA = arrayListOf()
+                musicListPA.addAll(PlaylistActivity.musicPlaylist.ref[PlaylistDetails.currentPlaylistPos].playlist)
+                setLayout()
+            }
+            "PlaylistDetailsShuffle" ->{
+                startService()
+                musicListPA = arrayListOf()
+                musicListPA.addAll(PlaylistActivity.musicPlaylist.ref[PlaylistDetails.currentPlaylistPos].playlist)
+                musicListPA.shuffle()
+                setLayout()
+            }
         }
     }
 
@@ -141,6 +170,9 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setLayout() {
+
+        fIndex = favouriteCheckerUtil.favouriteChecker(musicListPA[songPosition].id)
+
         showImgSong(this, musicListPA[songPosition].path, binding.songImgPA)
 
         binding.songNamePA.text = musicListPA[songPosition].title
@@ -149,6 +181,12 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         }
         if (min15 || min30 || min60) {
             binding.timerBtnPA.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
+        }
+
+        if (isFavourite) {
+            binding.favouriteBtnPA.setImageResource(R.drawable.ic_favorite)
+        } else{
+            binding.favouriteBtnPA.setImageResource(R.drawable.ic_favorite_empty)
         }
     }
 
@@ -203,6 +241,21 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
     private fun clickBack() {
         binding.backBtnPA.setOnClickListener {
             finish()
+        }
+    }
+
+    private fun clickFavourite(){
+        binding.favouriteBtnPA.setOnClickListener {
+            if (isFavourite){
+                isFavourite = false
+                binding.favouriteBtnPA.setImageResource(R.drawable.ic_favorite_empty)
+                FavouriteActivity.favouriteSongs.removeAt(fIndex)
+            } else {
+                isFavourite = true
+                binding.favouriteBtnPA.setImageResource(R.drawable.ic_favorite)
+                FavouriteActivity.favouriteSongs.add(musicListPA[songPosition])
+            }
+
         }
     }
 
