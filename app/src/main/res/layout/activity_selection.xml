@@ -41,7 +41,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/selectionRV"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:scrollbars="vertical"

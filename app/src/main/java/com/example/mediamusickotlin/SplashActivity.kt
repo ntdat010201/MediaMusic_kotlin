@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.mediamusickotlin.databinding.ActivitySplashBinding
 import com.example.mediamusickotlin.model.Music
+import com.example.mediamusickotlin.model.MusicPlaylist
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 
@@ -57,6 +58,7 @@ class SplashActivity : AppCompatActivity() {
             finish()
         }, 1300)
     }
+
 
     private fun userResponses() {
         if (ContextCompat.checkSelfPermission(
@@ -103,5 +105,13 @@ class SplashActivity : AppCompatActivity() {
             val data: ArrayList<Music> = GsonBuilder().create().fromJson(jsonString, typeToken)
             FavouriteActivity.favouriteSongs.addAll(data)
         }
+
+        PlaylistActivity.musicPlaylist = MusicPlaylist()
+        val jsonStringPlaylist = editor.getString("MusicPlaylist", null)
+        if (jsonStringPlaylist != null) {
+            val dataPlaylist: MusicPlaylist = GsonBuilder().create().fromJson(jsonStringPlaylist,MusicPlaylist::class.java)
+            PlaylistActivity.musicPlaylist = dataPlaylist
+        }
     }
+
 }

@@ -195,10 +195,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        // lưu trữ dữ liệu Favourite sd Persistent
         val editor = getSharedPreferences("FAVOURITES", MODE_PRIVATE).edit()
+        // lưu trữ dữ liệu Favourite sd Persistent
         val jsonString = GsonBuilder().create().toJson(FavouriteActivity.favouriteSongs)
         editor.putString("FavouriteSongs",jsonString)
+        // lưu trữ dữ liệu playlist sd Persistent
+        val jsonStringPlaylist = GsonBuilder().create().toJson(PlaylistActivity.musicPlaylist)
+        editor.putString("MusicPlaylist",jsonStringPlaylist)
+
         editor.apply()
     }
 

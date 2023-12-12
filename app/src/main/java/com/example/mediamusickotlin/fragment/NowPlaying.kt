@@ -1,5 +1,6 @@
 package com.example.mediamusickotlin.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ class NowPlaying : Fragment() {
     private val setSongPositionUtil by lazy { SetSongPositionUtil() }
 
     companion object{
+        @SuppressLint("StaticFieldLeak")
         lateinit var binding : FragmentNowPlayingBinding
     }
     override fun onCreateView(

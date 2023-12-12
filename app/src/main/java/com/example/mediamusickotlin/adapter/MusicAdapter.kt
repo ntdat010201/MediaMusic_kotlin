@@ -8,19 +8,19 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.mediamusickotlin.MainActivity
-import com.example.mediamusickotlin.PlayerActivity
-import com.example.mediamusickotlin.R
+import com.example.mediamusickotlin.*
 import com.example.mediamusickotlin.databinding.MusicViewBinding
 import com.example.mediamusickotlin.extension.getImageSong
 import com.example.mediamusickotlin.extension.showImgSong
 import com.example.mediamusickotlin.model.Music
 import com.example.mediamusickotlin.utils.FormatUtil
+import kotlinx.coroutines.currentCoroutineContext
 
 class MusicAdapter(
     private val context: Context,
     private var musicList: ArrayList<Music>,
-    private var playlistDetails: Boolean = false
+    private val playlistDetails: Boolean = false,
+    private var selectionActivity : Boolean = false
 ) : RecyclerView.Adapter<MusicAdapter.MyHolder>() {
 
     private val formatUtil by lazy { FormatUtil() }
@@ -57,6 +57,16 @@ class MusicAdapter(
                     sendIntent(ref = "PlaylistDetailsAdapter", position)
                 }
             }
+            selectionActivity ->{
+                holder.root.setOnClickListener {
+                    if (addSong(musicList[position])){
+                        holder.root.setBackgroundColor(ContextCompat.getColor(context,R.color.cool_pink))
+                    } else{
+                        holder.root.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
+                    }
+
+                }
+            }
             else ->{
                 holder.root.setOnClickListener {
                     when {
@@ -74,6 +84,7 @@ class MusicAdapter(
         return musicList.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateMusicList(searchList: ArrayList<Music>) {
         musicList = arrayListOf()
         musicList.addAll(searchList)
@@ -85,6 +96,24 @@ class MusicAdapter(
         intent.putExtra("pos", pos)
         intent.putExtra("class", ref)
         context.startActivity(intent)
+    }
+
+    private fun addSong(song:Music) : Boolean{
+        PlaylistActivity.musicPlaylist.ref[PlaylistDetails.currentPlaylistPos].playlist.forEachIndexed { index, music ->
+            if (song.id == music.id){
+                PlaylistActivity.musicPlaylist.ref[PlaylistDetails.currentPlaylistPos].playlist.removeAt(index)
+                return false
+            }
+        }
+        PlaylistActivity.musicPlaylist.ref[PlaylistDetails.currentPlaylistPos].playlist.add(song)
+        return true
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun refreshPlaylist(){
+        musicList = arrayListOf()
+        musicList = PlaylistActivity.musicPlaylist.ref[PlaylistDetails.currentPlaylistPos].playlist
+        notifyDataSetChanged()
     }
 
 }

@@ -12,6 +12,7 @@ import android.os.Looper
 import android.support.v4.media.session.MediaSessionCompat
 import android.util.Log
 import androidx.media.app.NotificationCompat
+import com.example.mediamusickotlin.MainActivity
 import com.example.mediamusickotlin.PlayerActivity
 import com.example.mediamusickotlin.R
 import com.example.mediamusickotlin.extension.getImgArt
@@ -41,6 +42,8 @@ class MusicService : Service() {
     }
 
     fun showNotification(playPauseBtn: Int) {
+        val intent = Intent(this, MainActivity::class.java)
+        val contentIntent = PendingIntent.getActivity(this,0,intent,0)
 
         val prevIntent = Intent(this, NotificationReceiver::class.java).setAction(Const.PREVIOUS)
         val prevPendingIntent =
@@ -66,6 +69,7 @@ class MusicService : Service() {
         }
 
         val notification = androidx.core.app.NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentIntent(contentIntent)
             .setContentTitle(PlayerActivity.musicListPA[PlayerActivity.songPosition].title)
             .setContentText(PlayerActivity.musicListPA[PlayerActivity.songPosition].artist)
             .setSmallIcon(R.drawable.ic_music_note)

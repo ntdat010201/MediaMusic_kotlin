@@ -1,5 +1,6 @@
 package com.example.mediamusickotlin
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
@@ -20,7 +21,7 @@ class PlaylistActivity : AppCompatActivity() {
     private lateinit var adapter: PlaylistViewAdapter
 
     companion object{
-        val musicPlaylist : MusicPlaylist = MusicPlaylist()
+        var musicPlaylist : MusicPlaylist = MusicPlaylist()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,5 +105,11 @@ class PlaylistActivity : AppCompatActivity() {
             musicPlaylist.ref.add(tempPlaylist)
             adapter.refreshPlaylist()
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onResume() {
+        super.onResume()
+        adapter.notifyDataSetChanged()
     }
 }
