@@ -59,7 +59,6 @@ class SplashActivity : AppCompatActivity() {
         }, 1300)
     }
 
-
     private fun userResponses() {
         if (ContextCompat.checkSelfPermission(
                 this, permission

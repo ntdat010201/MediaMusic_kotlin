@@ -16,7 +16,7 @@
             android:src="@drawable/ic_timer"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:tint="@color/cool_pink" />
+            app:tint="@color/dark_green" />
         <TextView
             android:padding="8dp"
             android:textColor="@color/black"
@@ -36,7 +36,7 @@
             android:src="@drawable/ic_timer"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:tint="@color/cool_pink" />
+            app:tint="@color/dark_green" />
         <TextView
             android:padding="8dp"
             android:textColor="@color/black"
@@ -56,7 +56,7 @@
             android:src="@drawable/ic_timer"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            app:tint="@color/cool_pink" />
+            app:tint="@color/dark_green" />
         <TextView
             android:padding="8dp"
             android:textColor="@color/black"

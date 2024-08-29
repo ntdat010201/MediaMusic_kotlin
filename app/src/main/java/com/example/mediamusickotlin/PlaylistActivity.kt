@@ -20,9 +20,10 @@ class PlaylistActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPlaylistBinding
     private lateinit var adapter: PlaylistViewAdapter
 
-    companion object{
-        var musicPlaylist : MusicPlaylist = MusicPlaylist()
+    companion object {
+        var musicPlaylist: MusicPlaylist = MusicPlaylist()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.coolPink)
@@ -57,6 +58,7 @@ class PlaylistActivity : AppCompatActivity() {
             finish()
         }
     }
+
     private fun clickAddPlaylist() {
         binding.addPlaylistBtn.setOnClickListener {
             customAlertDialog()
@@ -69,39 +71,38 @@ class PlaylistActivity : AppCompatActivity() {
         val binder = AddPlaylistDialogBinding.bind(customDialog)
 
         val builder = MaterialAlertDialogBuilder(this)
-        builder.setView(customDialog)
-            .setTitle("Playlist Details")
+        builder.setView(customDialog).setTitle("Playlist Details")
             .setPositiveButton("OK") { dialog, _ ->
 
                 val playlistName = binder.playlistName.text
                 val createdBy = binder.yourName.text
-                if (playlistName != null && createdBy != null){
-                    if (playlistName.isNotEmpty() && createdBy.isNotEmpty()){
-                        addPlaylist(playlistName.toString(),createdBy.toString())
+                if (playlistName != null && createdBy != null) {
+                    if (playlistName.isNotEmpty() && createdBy.isNotEmpty()) {
+                        addPlaylist(playlistName.toString(), createdBy.toString())
                     }
                 }
                 dialog.dismiss()
             }.show()
     }
 
-    private fun addPlaylist(name:String,createdBy : String){
+    private fun addPlaylist(name: String, createdBy: String) {
         var playlistExists = false
-        for (i in musicPlaylist.ref){
-            if (name == i.name){
+        for (i in musicPlaylist.ref) {
+            if (name == i.name) {
                 playlistExists = true
                 break
             }
         }
-        if (playlistExists){
+        if (playlistExists) {
             Toast.makeText(this, "Playlist đã tồn tại", Toast.LENGTH_SHORT).show()
-        } else{
+        } else {
             val tempPlaylist = Playlist()
             tempPlaylist.name = name
             tempPlaylist.playlist = ArrayList()
             tempPlaylist.createdBy = createdBy
             val calendar = Calendar.getInstance().time
             val sdf = SimpleDateFormat("dd MMM yyy", Locale.ENGLISH)
-            tempPlaylist.createdOn =sdf.format(calendar)
+            tempPlaylist.createdOn = sdf.format(calendar)
             musicPlaylist.ref.add(tempPlaylist)
             adapter.refreshPlaylist()
         }

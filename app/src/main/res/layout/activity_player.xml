@@ -149,7 +149,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/repeat_btn"
             android:src="@drawable/ic_repeat"
-            app:tint="@color/cool_pink" />
+            app:tint="@color/dark_green" />
 
         <ImageButton
     android:id="@+id/equalizerBtnPA"
@@ -159,7 +159,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/equalizer_btn"
             android:src="@drawable/ic_graphic_eq"
-            app:tint="@color/cool_pink" />
+            app:tint="@color/dark_green" />
 
         <ImageButton
             android:id="@+id/timerBtnPA"
@@ -169,7 +169,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/timer_btn"
             android:src="@drawable/ic_timer"
-            app:tint="@color/cool_pink" />
+            app:tint="@color/dark_green" />
 
         <ImageButton
             android:id="@+id/shareBtnPA"
@@ -179,7 +179,7 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/share_btn"
             android:src="@drawable/ic_share"
-            app:tint="@color/cool_pink" />
+            app:tint="@color/dark_green" />
 
     </LinearLayout>
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/cool_pink"
+    android:background="@color/dark_green"
     tools:context=".fragment.NowPlaying">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -22,7 +22,7 @@
         android:layout_alignParentEnd="true"
         app:icon="@drawable/ic_skip_next"
         app:iconTint="@color/white"
-        android:backgroundTint="@color/cool_pink"
+        android:backgroundTint="@color/dark_green"
         android:layout_centerVertical="true"
         app:iconSize="40dp"
         android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
         android:layout_marginHorizontal="5dp"
         app:icon="@drawable/ic_play"
         app:iconTint="@color/white"
-        android:backgroundTint="@color/cool_pink"
+        android:backgroundTint="@color/dark_green"
         android:layout_centerVertical="true"
         app:iconSize="40dp"
         android:layout_width="wrap_content"

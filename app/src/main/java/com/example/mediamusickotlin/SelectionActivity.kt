@@ -25,6 +25,7 @@ class SelectionActivity : AppCompatActivity() {
     private fun initData() {
         binding.selectionRV.setItemViewCacheSize(10)
         binding.selectionRV.setHasFixedSize(true)
+
         adapter = MusicAdapter(this, musicListMA, selectionActivity = true)
         binding.selectionRV.adapter = adapter
     }
@@ -39,9 +40,12 @@ class SelectionActivity : AppCompatActivity() {
 
     private fun searchView() {
         binding.searchViewSA.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
             override fun onQueryTextSubmit(query: String?): Boolean = true
+
             override fun onQueryTextChange(newText: String?): Boolean {
                 musicListSearch = arrayListOf()
+
                 if (newText != null) {
                     val userInput = newText.lowercase()
                     for (song in musicListMA) {

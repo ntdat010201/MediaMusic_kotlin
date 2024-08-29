@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         binding.playlistBtn.setOnClickListener {
             startActivity(Intent(this, PlaylistActivity::class.java))
         }
+
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.navFeedback -> Toast.makeText(this, "1", Toast.LENGTH_SHORT).show()
@@ -211,6 +212,7 @@ class MainActivity : AppCompatActivity() {
         val searchView = menu?.findItem(R.id.searchView)?.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean = true
+
             override fun onQueryTextChange(newText: String?): Boolean {
                 musicListSearch = arrayListOf()
                 if (newText != null) {

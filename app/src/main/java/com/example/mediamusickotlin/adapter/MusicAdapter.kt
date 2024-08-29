@@ -7,14 +7,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.mediamusickotlin.*
 import com.example.mediamusickotlin.databinding.MusicViewBinding
-import com.example.mediamusickotlin.extension.getImageSong
 import com.example.mediamusickotlin.extension.showImgSong
 import com.example.mediamusickotlin.model.Music
 import com.example.mediamusickotlin.utils.FormatUtil
-import kotlinx.coroutines.currentCoroutineContext
 
 class MusicAdapter(
     private val context: Context,
@@ -60,7 +57,7 @@ class MusicAdapter(
             selectionActivity ->{
                 holder.root.setOnClickListener {
                     if (addSong(musicList[position])){
-                        holder.root.setBackgroundColor(ContextCompat.getColor(context,R.color.cool_pink))
+                        holder.root.setBackgroundColor(ContextCompat.getColor(context,R.color.dark_green))
                     } else{
                         holder.root.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
                     }

@@ -9,7 +9,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_marginTop="2dp"
-        android:background="@color/cool_pink"
+        android:background="@color/dark_green"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        android:background="@color/cool_pink"
+        android:background="@color/dark_green"
         android:layout_marginTop="10dp">
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/playlistImgPD"
@@ -88,13 +88,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.9"
         android:backgroundTint="@color/white"
-        app:iconTint="@color/cool_pink"
+        app:iconTint="@color/dark_green"
         app:iconSize="35dp"
         app:icon="@drawable/ic_shuffle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:strokeWidth="2dp"
-        app:strokeColor="@color/cool_pink"/>
+        app:strokeColor="@color/dark_green"/>
 
 
         <LinearLayout

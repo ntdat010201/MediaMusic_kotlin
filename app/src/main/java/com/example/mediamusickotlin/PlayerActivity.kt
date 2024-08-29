@@ -7,7 +7,6 @@ import android.content.ServiceConnection
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.media.audiofx.AudioEffect
-import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.view.LayoutInflater
@@ -18,9 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import com.bumptech.glide.Glide
 import com.example.mediamusickotlin.databinding.ActivityPlayerBinding
-import com.example.mediamusickotlin.extension.getImageSong
 import com.example.mediamusickotlin.extension.showImgSong
 import com.example.mediamusickotlin.model.Music
 import com.example.mediamusickotlin.service.MusicService
@@ -47,9 +44,9 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         var min15: Boolean = false
         var min30: Boolean = false
         var min60: Boolean = false
-        var nowPlayingId : String = ""
-        var isFavourite : Boolean = false
-        var fIndex : Int = -1
+        var nowPlayingId: String = ""
+        var isFavourite: Boolean = false
+        var fIndex: Int = -1
 
         @SuppressLint("StaticFieldLeak")
         lateinit var binding: ActivityPlayerBinding
@@ -97,13 +94,15 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
             }
             "NowPlaying" -> {
                 setLayout()
-                binding.tvSeekBarStart.text = formatUtil.formatDuration(musicService!!.mediaPlayer!!.currentPosition.toLong())
-                binding.tvSeekbarEnd.text = formatUtil.formatDuration(musicService!!.mediaPlayer!!.duration.toLong())
+                binding.tvSeekBarStart.text =
+                    formatUtil.formatDuration(musicService!!.mediaPlayer!!.currentPosition.toLong())
+                binding.tvSeekbarEnd.text =
+                    formatUtil.formatDuration(musicService!!.mediaPlayer!!.duration.toLong())
                 binding.seekBarPA.progress = musicService!!.mediaPlayer!!.currentPosition
                 binding.seekBarPA.max = musicService!!.mediaPlayer!!.duration
-                if (isPlaying){
+                if (isPlaying) {
                     binding.playPauseBtnPA.setIconResource(R.drawable.ic_pause)
-                } else{
+                } else {
                     binding.playPauseBtnPA.setIconResource(R.drawable.ic_play)
                 }
             }
@@ -133,13 +132,13 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                 musicListPA.shuffle()
                 setLayout()
             }
-            "PlaylistDetailsAdapter" ->{
+            "PlaylistDetailsAdapter" -> {
                 startService()
                 musicListPA = arrayListOf()
                 musicListPA.addAll(PlaylistActivity.musicPlaylist.ref[PlaylistDetails.currentPlaylistPos].playlist)
                 setLayout()
             }
-            "PlaylistDetailsShuffle" ->{
+            "PlaylistDetailsShuffle" -> {
                 startService()
                 musicListPA = arrayListOf()
                 musicListPA.addAll(PlaylistActivity.musicPlaylist.ref[PlaylistDetails.currentPlaylistPos].playlist)
@@ -185,7 +184,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
 
         if (isFavourite) {
             binding.favouriteBtnPA.setImageResource(R.drawable.ic_favorite)
-        } else{
+        } else {
             binding.favouriteBtnPA.setImageResource(R.drawable.ic_favorite_empty)
         }
     }
@@ -244,9 +243,9 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
         }
     }
 
-    private fun clickFavourite(){
+    private fun clickFavourite() {
         binding.favouriteBtnPA.setOnClickListener {
-            if (isFavourite){
+            if (isFavourite) {
                 isFavourite = false
                 binding.favouriteBtnPA.setImageResource(R.drawable.ic_favorite_empty)
                 FavouriteActivity.favouriteSongs.removeAt(fIndex)
@@ -266,7 +265,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                 binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this, R.color.purple_500))
             } else {
                 repeat = false
-                binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this, R.color.cool_pink))
+                binding.repeatBtnPA.setColorFilter(ContextCompat.getColor(this, R.color.dark_green))
             }
         }
     }
@@ -311,7 +310,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
                         binding.timerBtnPA.setColorFilter(
                             ContextCompat.getColor(
                                 this,
-                                R.color.cool_pink
+                                R.color.dark_green
                             )
                         )
                     }.setNegativeButton("không") { dialog, _ ->
