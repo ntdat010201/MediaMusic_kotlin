@@ -55,7 +55,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection, MediaPlayer.OnCom
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.coolPink)
+        setTheme(R.style.darkGreen)
         binding = ActivityPlayerBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
         initData()

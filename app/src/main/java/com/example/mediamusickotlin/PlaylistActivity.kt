@@ -26,7 +26,7 @@ class PlaylistActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.coolPink)
+        setTheme(R.style.darkGreen)
         binding = ActivityPlaylistBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
         initData()

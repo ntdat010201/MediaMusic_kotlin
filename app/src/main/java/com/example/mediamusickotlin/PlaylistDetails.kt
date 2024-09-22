@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mediamusickotlin.adapter.MusicAdapter
 import com.example.mediamusickotlin.databinding.ActivityPlaylistDetailsBinding
 import com.example.mediamusickotlin.extension.showImgSong
-import com.example.mediamusickotlin.model.MusicPlaylist
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.GsonBuilder
 
@@ -25,7 +24,7 @@ class PlaylistDetails : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.coolPink)
+        setTheme(R.style.darkGreen)
         binding = ActivityPlaylistDetailsBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
         initData()
